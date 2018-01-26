@@ -7,6 +7,7 @@ import (
 	"github.com/nargil07/nargilplayer/commandes"
 	"github.com/nargil07/nargilplayer/util/console"
 	"os"
+	"os/user"
 )
 
 func main() {
@@ -18,6 +19,9 @@ func main() {
 			help()
 		case "list":
 			commandes.List()
+		case "test":
+			usr,_ := user.Current()
+			fmt.Println(usr.HomeDir)
 		}
 
 	} else {

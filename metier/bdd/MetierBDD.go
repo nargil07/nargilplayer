@@ -18,7 +18,7 @@ func (m *MetierBDD) init() {
 	usr,_ := user.Current()
 	_, err = os.Stat(usr.HomeDir + "/.nargilplayer")
 	if os.IsNotExist(err) {
-		err = os.MkdirAll(usr.HomeDir + "/.nargilplayer", 777)
+		err = os.Mkdir(usr.HomeDir + "/.nargilplayer", 0777)
 		if err != nil{
 			fmt.Printf("ligne 20 : %s", err.Error())
 			log.Fatal(err)
@@ -64,8 +64,10 @@ func (m *MetierBDD) AllMusiques() []entity.Musique {
 		if err != nil {
 			log.Fatal(err)
 		}
+		fmt.Println(name)
 		mus := entity.Musique{}
 		mus.SetName(name)
+		aMusiques = append(aMusiques, mus)
 	}
 
 	rows.Close()
@@ -85,11 +87,11 @@ func (m *MetierBDD) AddMusique(musique entity.Musique) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	stmt, err := tx.Prepare("INSERT INTO musique (name) VALUES(?)")
+	stmt, err := tx.Prepare("INSERT INTO musique (name, path) VALUES(?,?)")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(musique.Name)
+	_, err = stmt.Exec(musique.Name, musique.Path)
 	tx.Commit()
 }

@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"github.com/nargil07/nargilplayer/entity"
 	"github.com/nargil07/nargilplayer/metier/bdd"
+	"strings"
 )
 
 func Add() {
@@ -44,9 +45,9 @@ func Add() {
 			mMetMusique := bdd.MetierBDD{}
 			for j := 0; j < len(input) ; j++{
 				musique := entity.Musique{}
-				musique.SetName(input[j])
-
-				fmt.Println(musique)
+				aSplit := strings.Split(input[j], "/")
+				musique.SetName(aSplit[len(aSplit)-1])
+				musique.SetPath(input[j])
 				mMetMusique.AddMusique(musique)
 			}
 
