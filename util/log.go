@@ -2,7 +2,7 @@ package util
 
 import "fmt"
 
-func LogErr(err error) bool{
+func LogErr(err error) bool {
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -1,39 +1,36 @@
 package main
 
-
-import(
+import (
 	"fmt"
-	"os"
 	"github.com/fatih/color"
-	"github.com/nargil/nargilplayer/commandes"
-	"github.com/nargil/nargilplayer/util/console"
-	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/nargil07/nargilplayer/commandes"
+	"github.com/nargil07/nargilplayer/util/console"
+	"os"
 )
 
 func main() {
-	if len(os.Args) > 1{
+	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "add":
 			commandes.Add()
 		case "--help":
 			help()
-		case "test":
-			testSql()
+		case "list":
+			commandes.List()
 		}
 
-	}else {
+	} else {
 		fmt.Println("nargilplayer: opérande de fichier manquant")
 		fmt.Println("Saisissez \" nargilplayer --help \" pour plus d'informations.")
 
 	}
 }
 
-
 /**
 
  */
-func help(){
+func help() {
 	fmt.Println("nargilplayer petit logiciel en ligne de commande pour écouter de la musique, gerer ses playlist.")
 	fmt.Println("")
 	fmt.Println(color.YellowString("usage : "))
@@ -43,15 +40,4 @@ func help(){
 	console.NewCommandLine("add", "Ajoute un fichier dans la liste de lecture")
 	fmt.Println("")
 	fmt.Println("")
-}
-
-func testSql(){
-	db, err := sql.Open("sqlite3", "./base.db")
-	if err != nil{
-		fmt.Println(err)
-	}else{
-		fmt.Println(db)
-		db.Close()
-
-	}
 }
